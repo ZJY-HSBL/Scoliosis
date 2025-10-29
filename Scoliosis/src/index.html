@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>脊柱侧弯评估系统</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<!-- 提示弹窗 -->
+<div class="toast" id="toast"></div>
+
+<!-- 主标题 -->
+<div class="main-title">曲度智衡AI康复专家</div>
+
+<!-- 1. 主页界面（默认显示） -->
+<div class="app-page active" id="home-page">
+  <h2 class="page-title">主页</h2>
+
+  <!-- 个人信息：头像+昵称 -->
+  <div class="user-info">
+    <div class="avatar">
+      <img src="./img/userimage.jpg" alt="用户头像">
+    </div>
+    <div>
+      <p class="user-name">脊柱健康用户</p>
+      <p style="font-size: 0.8rem; color: #718096;">上次评估：暂无记录</p>
+    </div>
+  </div>
+
+  <!-- 健康提示卡片 -->
+  <div class="user-info" style="margin-bottom: 1.5rem;">
+    <div style="flex: 1;">
+      <p style="font-weight: 500; margin-bottom: 0.3rem;">健康提示</p>
+      <p style="font-size: 0.85rem; color: #718096; line-height: 1.4;">
+        建议每3个月进行一次脊柱检查，保持正确坐姿和站姿，避免长时间低头。
+      </p>
+    </div>
+    <div style="width: 50px; height: 50px; border-radius: 50%; background-color: rgba(49, 130, 206, 0.1); display: flex; align-items: center; justify-content: center; color: #3182ce;">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm0-4h-2V7h2v8z"/>
+      </svg>
+    </div>
+  </div>
+
+  <!-- 我的分析模块 -->
+  <div class="my-analysis">
+    <div class="module-title">
+      <span>我的分析</span>
+      <span class="more-btn">
+        更多
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6-6-6z"/>
+        </svg>
+      </span>
+    </div>
+
+    <!-- 空数据提示（默认显示） -->
+    <div class="empty-tip">
+      <img src="https://via.placeholder.com/80/e2e8f0/e2e8f0?text=Empty" alt="空数据">
+      <p>暂无分析记录</p>
+      <p style="font-size: 0.8rem; margin-top: 0.3rem;">去分析界面上传脊柱X光片吧~</p>
+    </div>
+
+    <!-- 分析结果列表（占位，默认隐藏） -->
+    <div class="analysis-list" style="display: none;">
+      <div class="analysis-item">
+        <div class="item-img">
+          <img src="https://via.placeholder.com/60/3182ce/ffffff?text=Img1" alt="分析图片1">
+        </div>
+        <div class="item-content">
+          <p class="item-title">2024-05-20 14:30 分析结果</p>
+          <p class="item-desc">脊柱侧弯类型：胸椎左侧弯，角度约25度</p>
+        </div>
+      </div>
+      <div class="analysis-item">
+        <div class="item-img">
+          <img src="https://via.placeholder.com/60/3182ce/ffffff?text=Img2" alt="分析图片2">
+        </div>
+        <div class="item-content">
+          <p class="item-title">2024-05-19 09:15 分析结果</p>
+          <p class="item-desc">脊柱侧弯类型：腰椎右侧弯，角度约15度</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 2. 分析界面 -->
+<div class="app-page" id="analyze-page">
+  <h2 class="page-title">脊柱侧弯评估</h2>
+
+  <!-- 图片上传区域 -->
+  <div class="upload-area" id="upload-area">
+    <label for="file-input">
+      <svg class="upload-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+        <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
+        <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
+      </svg>
+      <p class="upload-text">点击或拖拽上传脊柱X光片</p>
+      <p class="upload-tip">支持 JPG、PNG、WEBP，最大5MB</p>
+    </label>
+    <input type="file" id="file-input" accept="image/jpeg,image/png,image/webp">
+  </div>
+
+  <!-- 图片预览区域 -->
+  <div class="preview-area" id="preview-area">
+    <div class="preview-remove" id="preview-remove">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="#718096">
+        <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+      </svg>
+    </div>
+    <p class="preview-title">上传预览</p>
+    <img id="preview-img" alt="图片预览">
+  </div>
+
+  <!-- 加载提示 -->
+  <div class="loading" id="loading">正在分析脊柱X光片...</div>
+
+  <!-- 错误提示 -->
+  <div class="error" id="error"></div>
+
+  <!-- 分析按钮 -->
+  <button class="btn" id="analyze-btn" disabled>开始分析</button>
+
+  <!-- 结果展示区域 -->
+  <div class="result-area" id="result-area">
+    <p class="result-title">分析结果</p>
+    <div class="spinal-type" id="spinal-type">分析中...</div>
+    <div class="spinal-description" id="spinal-description"></div>
+    <div class="training-plan" id="training-plan">
+      <h3>个性化康复训练方案</h3>
+      <div id="training-plan-content"></div>
+    </div>
+    <button class="btn" style="margin-top: 1rem;" id="save-result-btn">保存分析结果</button>
+  </div>
+</div>
+
+<!-- 3. 训练详情界面 -->
+<div class="app-page" id="training-detail-page">
+  <button class="back-btn" id="back-to-plan">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+    </svg>
+    返回训练方案
+  </button>
+  <div class="video-container">
+    <div class="video-placeholder" id="video-placeholder" style="display: none;">
+      <img src="https://via.placeholder.com/300x200/3182ce/ffffff?text=训练视频" alt="训练视频">
+    </div>
+    <video class="training-video" id="training-video" controls style="display: block;">
+      <source src="" type="video/mp4">
+      您的浏览器不支持视频播放。
+    </video>
+  </div>
+  <div class="training-detail-content">
+    <h2 class="page-title" id="detail-title">训练详情</h2>
+
+    <!-- 训练说明部分 -->
+    <div class="detail-section">
+      <h3 class="detail-section-title">训练说明</h3>
+      <div class="detail-content" id="training-instructions"></div>
+    </div>
+
+    <!-- 训练强度部分 -->
+    <div class="detail-section">
+      <h3 class="detail-section-title">训练强度</h3>
+      <div class="detail-content" id="training-intensity"></div>
+    </div>
+
+    <!-- 注意事项部分 -->
+    <div class="detail-section">
+      <h3 class="detail-section-title">注意事项</h3>
+      <div class="detail-content" id="training-notes"></div>
+    </div>
+
+    <div style="margin-top: 1.5rem;">
+      <button class="btn" id="start-training-btn">开始训练</button>
+    </div>
+  </div>
+</div>
+
+<!-- 4. 底部导航 -->
+<div class="app-nav">
+  <div class="nav-item active" data-target="home-page">
+    <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+      <path d="M8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5v-4a.5.5 0 0 1 1 0v4a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L8.354 1.146zM2.5 14V7.707l5.5-5.5 5.5 5.5V14H10.5v-3a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5v3H2.5z"/>
+    </svg>
+    <span>主页</span>
+  </div>
+  <div class="nav-item" data-target="analyze-page">
+    <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+      <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm0-1a7 7 0 1 1 0-14 7 7 0 0 1 0 14z"/>
+      <path d="M10.97 4.97a.235.235 0 0 0-.02.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05z"/>
+    </svg>
+    <span>评估</span>
+  </div>
+</div>
+
+<script type="module" src="js/app.js"></script>
+</body>
+</html>
