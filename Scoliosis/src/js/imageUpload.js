@@ -132,7 +132,7 @@ const imageUpload = {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': 'Bearer df14991d-bd91-450b-bc5e-ad3a9f55ffa5'
+          'Authorization': 'Bearer token..........'
         },
         body: JSON.stringify({
           model: 'doubao-seed-1-6-vision-250815',
